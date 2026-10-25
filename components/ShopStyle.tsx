@@ -1,9 +1,9 @@
 import Reveal from "./Reveal";
 
 const items = [
-  { t: "Puffer jackets", p: "$292", d: "Lightweight puffers with powerful insulation.", img: "puffer.png" },
-  { t: "Wool coats", p: "$300", d: "Elegant wool coats for premium winter warmth.", img: "wool.png" },
-  { t: "Knit sweaters", p: "$200", d: "Soft knits for cozy everyday comfort.", img: "knit.png" },
+  { t: "Puffer jackets", p: "$292", d: "Lightweight puffers with powerful insulation.", img: "puffer-Photoroom.png" },
+  { t: "Wool coats", p: "$300", d: "Elegant wool coats for premium winter warmth.", img: "wool-Photoroom.png" },
+  { t: "Knit sweaters", p: "$200", d: "Soft knits for cozy everyday comfort.", img: "knit-Photoroom.png" },
 ];
 
 export default function ShopStyle() {
