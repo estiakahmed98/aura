@@ -13,7 +13,7 @@ export default function ShopStyle() {
         <h2 className="display">Shop by<br />signature style</h2>
         <div className="shop-side">
           <p>Curated fashion categories designed to match every mood, moment, and personality.</p>
-          <a href="#drops" className="btn-lime">Explore Collection &rarr;</a>
+          <a href="/collections" className="btn-lime">Explore Collection &rarr;</a>
         </div>
       </div>
       <div className="shop-grid">

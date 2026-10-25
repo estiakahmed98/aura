@@ -16,11 +16,11 @@ export default function Newsletter() {
       <div className="news-cols">
         <nav aria-label="Footer navigation">
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#shop">Shop</a></li>
-            <li><a href="#drops">Collections</a></li>
-            <li><a href="#footer-contact">Contact</a></li>
-            <li>FAQs</li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/#shop">Shop</a></li>
+            <li><a href="/collections">Collections</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/faqs">FAQs</a></li>
           </ul>
         </nav>
         <div id="footer-contact" className="news-contact">
@@ -34,7 +34,7 @@ export default function Newsletter() {
       </div>
       <div className="news-bottom">
         <small>&copy; {new Date().getFullYear()} Aura. All rights reserved.</small>
-        <small>Privacy Policy <span aria-hidden="true">/</span> Terms of Service</small>
+        <small><a href="/privacy-policy">Privacy Policy</a> <span aria-hidden="true">/</span> <a href="/terms-of-service">Terms of Service</a></small>
       </div>
     </section>
   );

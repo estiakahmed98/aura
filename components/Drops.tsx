@@ -27,7 +27,7 @@ export default function Drops() {
     <section id="drops" className="drops" aria-labelledby="drops-title">
       <div className="drops-head">
         <h2 id="drops-title" className="display">This season&rsquo;s winter drops</h2>
-        <button className="outline" type="button">See All <span aria-hidden="true">&#8599;</span></button>
+        <a className="outline" href="/collections">See All <span aria-hidden="true">&#8599;</span></a>
       </div>
       <div className="rail-wrap">
         <div className="rail" ref={rail} tabIndex={0} role="region" aria-label="Winter collections">
@@ -43,7 +43,7 @@ export default function Drops() {
           <button className="arrow r" type="button" onClick={() => go(1)} aria-label="Next collection">&rarr;</button>
         </div>
       </div>
-      <div className="center"><button className="outline">Discover All Collection &#8599;</button></div>
+      <div className="center"><a className="outline" href="/collections">Discover All Collection &#8599;</a></div>
     </section>
   );
 }
