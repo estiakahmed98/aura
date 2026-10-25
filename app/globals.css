@@ -24,7 +24,9 @@ button{font:inherit;cursor:pointer}
 .nav{display:flex;justify-content:space-between;align-items:center;min-height:88px;padding:18px 7%;font-size:16px;position:relative;z-index:5;border-bottom:1px solid #e3faff30}
 .nav-l,.nav-r{display:flex;gap:24px;align-items:center;flex:1}
 .nav-r{justify-content:flex-end}
-.logo{font-family:var(--font-logo),serif;font-size:44px;letter-spacing:-2px;line-height:1}
+.logo{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:180px;height:64px;border-radius:10px;overflow:hidden;background:#fff}
+.nav-brand-logo{display:block;width:100%;height:100%;object-fit:cover}
+.nav-brand-icon{display:none}
 .hero .pill{border-radius:10px;min-height:44px;padding-inline:28px;font-family:var(--font-display),Impact,sans-serif;font-size:14px}
 .nav-l a,.nav-r>a{padding-block:10px;transition:color .2s}
 .nav-l a:hover,.nav-r>a:hover{color:var(--lime)}
@@ -39,7 +41,9 @@ button{font:inherit;cursor:pointer}
   .hero .nav{min-height:76px;padding:14px 5%}
   .hero::before{top:76px}
   .hero .nav-l,.hero .nav-r{display:none}
-  .hero .logo{position:absolute;left:50%;transform:translateX(-50%);font-size:36px}
+  .hero .logo{position:static;width:48px;height:48px;border-radius:10px}
+  .nav-brand-logo{display:none}
+  .nav-brand-icon{display:block;width:100%;height:100%;object-fit:contain;transform:scale(1.35)}
   .nav-toggle{display:flex;margin-left:auto}
   .nav-mobile:not([hidden]){display:flex;flex-direction:column;position:absolute;top:calc(100% + 8px);left:5%;right:5%;padding:14px 20px 20px;border:1px solid #ffffff80;border-radius:16px;background:#f3fcff;color:#163b46;box-shadow:0 18px 45px #07536b30;animation:nav-menu-in .2s ease-out}
   .nav-mobile>a{display:flex;align-items:center;min-height:48px;border-bottom:1px solid #188fa71a;font-size:17px}
@@ -74,12 +78,15 @@ button{font:inherit;cursor:pointer}
 
 .marquee{position:relative;min-height:380px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:40px;padding:60px 0}
 .mq-row{overflow:hidden;white-space:nowrap}
-.lime-row{background:var(--ink);color:var(--lime)}
+.lime-row{position:relative;z-index:1;background:var(--ink);color:var(--lime)}
 .mq-row .mq-track{display:inline-block;font-family:var(--font-display),Impact,sans-serif;text-transform:uppercase;font-size:clamp(28px,3.4vw,48px);animation:slide 28s linear infinite}
 .dark-row .mq-track{animation-direction:reverse}
 @keyframes slide{to{transform:translateX(-33.33%)}}
-.mq-photo{position:absolute;left:50%;top:50%;width:min(320px,60vw);height:240px;transform:translate(-50%,-50%) rotate(-3deg);border-radius:12px;background:#4b6358 center/cover;box-shadow:0 20px 50px rgba(0,0,0,.25);transition:transform .5s}
-.marquee:hover .mq-photo{transform:translate(-50%,-50%) rotate(2deg) scale(1.04)}
+.mq-photo{--tilt:-3deg;position:absolute;left:50%;top:50%;width:min(320px,25vw);height:240px;transform:translate(-50%,-50%) rotate(var(--tilt));border-radius:12px;background:#4b6358 center/cover;box-shadow:0 20px 50px rgba(0,0,0,.25);transition:transform .5s}
+.mq-photo-left{--tilt:-9deg;left:19%;top:54%}
+.mq-photo-right{--tilt:8deg;left:81%;top:54%}
+.marquee:hover .mq-photo{transform:translate(-50%,-50%) rotate(calc(var(--tilt) + 5deg)) scale(1.04)}
+@media(max-width:700px){.mq-photo{width:min(320px,70vw)}.mq-photo-left,.mq-photo-right{display:none}}
 
 .shop{padding:90px 60px}
 .shop-head{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}

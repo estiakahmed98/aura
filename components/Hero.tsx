@@ -10,7 +10,7 @@ export default function Hero() {
         <div className="hero-cloud-bank hero-cloud-bank-far" />
       </div>
       <HeroNav />
-      <h1 id="hero-title" className="hero-title display">Winter x Gez-Z</h1>
+      <h1 id="hero-title" className="hero-title display">Winter x Gen-Z</h1>
       <div className="hero-orbit" aria-hidden="true" />
       <div className="hero-stage">
         <Image

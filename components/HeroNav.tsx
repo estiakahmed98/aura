@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import logo from "../public/logo.png";
+import icon from "../public/icon.png";
 
 const links = [
   { label: "Home", href: "#" },
@@ -47,7 +50,10 @@ export default function HeroNav() {
       <div className="nav-l">
         {links.map(({ label, href }) => <a key={label} href={href}>{label}</a>)}
       </div>
-      <a className="logo" href="#" aria-label="Aura home" onClick={() => setOpen(false)}>AURA</a>
+      <a className="logo" href="#" aria-label="Aura home" onClick={() => setOpen(false)}>
+        <Image className="nav-brand-logo" src={logo} alt="AURA" sizes="180px" />
+        <Image className="nav-brand-icon" src={icon} alt="AURA" sizes="64px" />
+      </a>
       <div className="nav-r">
         <a href="#">Log in</a>
         <button className="pill" type="button">Sign up</button>

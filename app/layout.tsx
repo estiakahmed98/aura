@@ -7,8 +7,12 @@ const italiana = Italiana({ weight: "400", subsets: ["latin"], variable: "--font
 const inter = Inter({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "AURA – Winter x Gez-Z",
+  title: "AURA – Winter x Gen-Z",
   description: "Modern fashion for bold and confident lifestyles.",
+  icons: {
+    icon: { url: "/icon.png", type: "image/png" },
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
