@@ -9,15 +9,19 @@ import Wordmark from "@/components/Wordmark";
 
 export default function Home() {
   return (
-    <main>
+    <>
+      <main>
       <Hero />
       <Marquee />
       <ShopStyle />
       <Curate />
       <Drops />
       <Loved />
-      <Newsletter />
-      <Wordmark />
-    </main>
+      </main>
+      <footer className="site-footer">
+        <Newsletter />
+        <Wordmark />
+      </footer>
+    </>
   );
 }

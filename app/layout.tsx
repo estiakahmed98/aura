@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Anton, Italiana, Inter } from "next/font/google";
+import { Anton, Bodoni_Moda, Italiana, Inter } from "next/font/google";
 import "./globals.css";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const italiana = Italiana({ weight: "400", subsets: ["latin"], variable: "--font-logo" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-body" });
+const wordmark = Bodoni_Moda({ weight: "500", subsets: ["latin"], variable: "--font-wordmark", display: "swap" });
 
 export const metadata: Metadata = {
   title: "AURA – Winter x Gen-Z",
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${anton.variable} ${italiana.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${anton.variable} ${italiana.variable} ${inter.variable} ${wordmark.variable}`} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );
