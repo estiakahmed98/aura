@@ -1,0 +1,67 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { DEMO_SESSION_KEY, readDemoSession, type DemoUser } from "@/lib/demo-session";
+
+const groups = [
+  { title: "Workspace", items: [["Overview", "◈"], ["Orders", "▤"], ["Products", "▦"], ["Collections", "◇"], ["Inventory", "▥"], ["Customers", "♧"]] },
+  { title: "Grow your brand", items: [["Analytics", "↗"], ["Discounts", "%"], ["Marketing", "◎"], ["Newsletter", "✉"], ["Reviews", "☆"]] },
+  { title: "Store management", items: [["Content", "▧"], ["Shipping", "⇢"], ["Payments", "▣"], ["Team", "♙"], ["Integrations", "⌘"], ["Settings", "⚙"]] },
+];
+const orders = [
+  { id: "AU-1028", name: "Olivia Martin", initials: "OM", product: "Puffer jacket", amount: 292, status: "Delivered", date: "Oct 25, 2026" },
+  { id: "AU-1027", name: "Jackson Lee", initials: "JL", product: "Wool coat", amount: 300, status: "Processing", date: "Oct 25, 2026" },
+  { id: "AU-1026", name: "Sophia Brown", initials: "SB", product: "Knit sweater", amount: 200, status: "Shipped", date: "Oct 24, 2026" },
+  { id: "AU-1025", name: "Noah Williams", initials: "NW", product: "Puffer jacket", amount: 292, status: "Delivered", date: "Oct 24, 2026" },
+  { id: "AU-1024", name: "Emma Davis", initials: "ED", product: "Wool coat", amount: 300, status: "Processing", date: "Oct 23, 2026" },
+];
+const products = [{ name: "Puffer jacket", image: "puffer-Photoroom.png", sold: 124, amount: "$36,208", progress: 88 }, { name: "Wool coat", image: "wool-Photoroom.png", sold: 98, amount: "$29,400", progress: 69 }, { name: "Knit sweater", image: "knit-Photoroom.png", sold: 76, amount: "$15,200", progress: 52 }];
+
+export default function AdminDashboard() {
+  const router = useRouter();
+  const [user, setUser] = useState<DemoUser | null>(null);
+  const [section, setSection] = useState("Overview");
+  const [drawer, setDrawer] = useState(false);
+  const [period, setPeriod] = useState("30");
+  const [search, setSearch] = useState("");
+  const [activity, setActivity] = useState(false);
+  const menuToggle = useRef<HTMLButtonElement>(null);
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => { const saved = readDemoSession(); if (!saved) router.replace("/login"); else setUser(saved); }, [router]);
+  useEffect(() => {
+    if (!drawer) return;
+    const escape = (event: KeyboardEvent) => { if (event.key === "Escape") { setDrawer(false); menuToggle.current?.focus(); } };
+    document.addEventListener("keydown", escape);
+    return () => document.removeEventListener("keydown", escape);
+  }, [drawer]);
+  const navigate = (value: string) => { setSection(value); setDrawer(false); setActivity(false); setTimeout(() => heading.current?.focus(), 0); };
+  const logout = () => { sessionStorage.removeItem(DEMO_SESSION_KEY); router.replace("/login"); };
+  const exportReport = () => {
+    const csv = ["Demo order,Customer,Product,Total USD,Status", ...orders.map(o => [o.id,o.name,o.product,o.amount,o.status].join(","))].join("\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+    const link = document.createElement("a"); link.href = url; link.download = "aura-demo-orders.csv"; link.click(); URL.revokeObjectURL(url);
+  };
+  if (!user) return <main className="admin-loading" aria-live="polite"><span className="admin-wordmark">AURA</span><p>Opening your studio…</p></main>;
+  const shown = orders.filter(o => `${o.id} ${o.name} ${o.product} ${o.status}`.toLowerCase().includes(search.toLowerCase()));
+  const weekly = period === "7";
+  return <div className="admin-app">
+    {drawer && <button className="admin-scrim" aria-label="Close sidebar" onClick={() => setDrawer(false)} />}
+    <aside id="admin-sidebar" className={`admin-sidebar${drawer ? " is-open" : ""}`}>
+      <a href="/" className="admin-brand"><span className="admin-wordmark">AURA</span><span>ADMIN STUDIO</span></a>
+      <div className="admin-store"><span className="store-icon">A</span><div><b>AURA Fashion</b><span>Demo workspace</span></div><span className="store-dot" /></div>
+      <nav aria-label="Admin navigation">{groups.map(group => <div className="admin-nav-group" key={group.title}><p>{group.title}</p>{group.items.map(([name, icon]) => <button key={name} type="button" aria-current={section === name ? "page" : undefined} onClick={() => navigate(name)}><span className="admin-nav-icon" aria-hidden="true">{icon}</span><span>{name}</span>{name === "Orders" ? <small>24</small> : name !== "Overview" && <span className="admin-nav-soon">Soon</span>}</button>)}</div>)}</nav>
+      <div className="admin-sidebar-bottom"><a href="/" target="_blank" rel="noreferrer">Visit storefront <span aria-hidden="true">↗</span></a><button type="button" onClick={logout}>Log out <span aria-hidden="true">⇥</span></button><div className="admin-profile"><span>{user.name.slice(0,2).toUpperCase()}</span><div><b>{user.name}</b><small>Demo administrator</small></div></div></div>
+    </aside>
+    <div className="admin-body"><header className="admin-topbar"><div className="admin-breadcrumb"><button type="button" ref={menuToggle} className="admin-menu-button" aria-controls="admin-sidebar" aria-expanded={drawer} aria-label={drawer ? "Close sidebar" : "Open sidebar"} onClick={() => setDrawer(value => !value)}>☰</button><span>Workspace <span aria-hidden="true">/</span> <b>{section}</b></span></div><div className="admin-top-actions"><span className="admin-demo-badge">Demo mode</span><button type="button" className="admin-activity-button" aria-expanded={activity} onClick={() => setActivity(value => !value)}>Activity <span aria-hidden="true">•</span></button><span className="admin-avatar" title={user.name}>{user.name.slice(0,2).toUpperCase()}</span></div>{activity && <div className="admin-notifications"><b>Latest activity</b><p>New demo order #AU-1028 <small>5 minutes ago</small></p><p>Winter edit updated <small>32 minutes ago</small></p><span>Sample activity from the demo store.</span></div>}</header>
+    <main className="admin-main"><div className="admin-page-heading"><div><span className="admin-eyebrow">YOUR BRAND, AT A GLANCE</span><h1 ref={heading} tabIndex={-1}>{section === "Overview" ? "A good day to grow." : section}</h1><p>{section === "Overview" ? `Welcome back, ${user.name}. Here’s how your store is doing.` : "Your next chapter in the AURA studio."}</p></div>{section === "Overview" && <button className="admin-button" type="button" onClick={exportReport}>↓ Export demo report</button>}</div>
+    <div className="admin-demo-banner"><span aria-hidden="true">✦</span> You’re exploring a demo. All metrics, orders, and customer details below are sample data.</div>
+    {section !== "Overview" ? <section className="admin-coming-soon"><span className="coming-orbit" aria-hidden="true">✦</span><span className="admin-eyebrow">A LITTLE SOMETHING IN THE MAKING</span><h2>{section}, reimagined.</h2><p>This part of your studio is coming soon. For now, explore the overview to see what your AURA workspace could look like.</p><span className="coming-pill">Coming soon</span><button type="button" className="admin-button admin-button-lime" onClick={() => navigate("Overview")}>Back to overview →</button></section> : <>
+      <div className="admin-metrics">{[{ label: "Total revenue", value: weekly ? "$12,480" : "$48,295", change: "+18.6%", icon: "$" }, { label: "Orders", value: weekly ? "87" : "342", change: "+12.8%", icon: "▤" }, { label: "Customers", value: weekly ? "64" : "1,284", change: "+8.2%", icon: "♧" }, { label: "Average order", value: weekly ? "$143.45" : "$141.21", change: "+5.1%", icon: "↗" }].map(metric => <article className="metric-card" key={metric.label}><div><span>{metric.label}</span><span className="metric-icon" aria-hidden="true">{metric.icon}</span></div><strong>{metric.value}</strong><p><span>{metric.change} ↗</span> vs. previous period</p></article>)}</div>
+      <div className="admin-chart-grid"><section className="admin-panel revenue-panel"><div className="admin-panel-heading"><div><h2>Revenue overview</h2><p>A little momentum, every day.</p></div><label className="sr" htmlFor="revenue-period">Revenue period</label><select id="revenue-period" value={period} onChange={event => setPeriod(event.target.value)}><option value="30">Last 30 days</option><option value="7">Last 7 days</option></select></div><div className="revenue-summary"><strong>{weekly ? "$12,480.00" : "$48,295.00"}</strong><span>↗ 18.6%</span></div><div className="revenue-chart" role="img" aria-label={`Demo revenue trends upward over the last ${period} days. Total ${weekly ? '$12,480' : '$48,295'}.`}><div className="chart-y-labels"><span>{weekly ? "$4k" : "$12k"}</span><span>{weekly ? "$3k" : "$9k"}</span><span>{weekly ? "$2k" : "$6k"}</span><span>{weekly ? "$1k" : "$3k"}</span></div><svg viewBox="0 0 700 200" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="revenue-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#c7e75c" stopOpacity=".4"/><stop offset="1" stopColor="#c7e75c" stopOpacity="0"/></linearGradient></defs>{[20,70,120,170].map(y => <line key={y} x1="0" y1={y} x2="700" y2={y} stroke="#e9edec" strokeDasharray="4 5"/>)}<path d={weekly ? "M0 165 L100 130 L200 150 L300 80 L400 105 L500 55 L600 65 L700 15 L700 200 L0 200Z" : "M0 165 C35 170 40 140 75 145 S120 90 160 115 S220 150 255 95 S315 120 350 70 S410 110 450 80 S510 25 550 45 S620 95 650 40 L700 15 L700 200 L0 200Z"} fill="url(#revenue-fill)"/><path d={weekly ? "M0 165 L100 130 L200 150 L300 80 L400 105 L500 55 L600 65 L700 15" : "M0 165 C35 170 40 140 75 145 S120 90 160 115 S220 150 255 95 S315 120 350 70 S410 110 450 80 S510 25 550 45 S620 95 650 40 L700 15"} stroke="#729e32" strokeWidth="2.5" fill="none" vectorEffect="non-scaling-stroke"/></svg></div><div className="chart-x-labels">{(weekly ? ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] : ["Oct 01","Oct 05","Oct 10","Oct 15","Oct 20","Oct 25"]).map(label => <span key={label}>{label}</span>)}</div></section>
+      <section className="admin-panel top-products"><div className="admin-panel-heading"><div><h2>Top products</h2><p>The season’s favorites.</p></div><button type="button" onClick={() => navigate("Products")} aria-label="View products">↗</button></div>{products.map(product => <div className="top-product" key={product.name}><div className="top-product-image"><Image src={`/images/${product.image}`} alt={product.name} fill sizes="48px" /></div><div><b>{product.name}</b><span>{product.sold} sold</span><div className="product-progress"><i style={{width:`${product.progress}%`}} /></div></div><strong>{product.amount}</strong></div>)}<div className="product-insight"><span aria-hidden="true">✦</span><p>Puffer jackets lead the winter edit.<br /><b>Keep the momentum going.</b></p></div></section></div>
+      <section className="admin-panel orders-panel"><div className="admin-panel-heading"><div><h2>Recent orders</h2><p>A snapshot of what’s moving.</p></div><button type="button" className="admin-text-button" onClick={() => navigate("Orders")}>View all orders ↗</button></div><label className="order-search"><span aria-hidden="true">⌕</span><input value={search} onChange={event => setSearch(event.target.value)} placeholder="Search demo orders…" aria-label="Search demo orders" /></label><div className="admin-table-wrap"><table><caption className="sr">Recent sample orders</caption><thead><tr>{["Order","Customer","Product","Date","Amount","Status"].map(title => <th scope="col" key={title}>{title}</th>)}</tr></thead><tbody>{shown.map(order => <tr key={order.id}><td className="order-id">#{order.id}</td><td><span className="customer-cell"><span>{order.initials}</span>{order.name}</span></td><td>{order.product}</td><td>{order.date}</td><td className="order-amount">${order.amount}.00</td><td><span className={`order-status ${order.status.toLowerCase()}`}>{order.status}</span></td></tr>)}</tbody></table>{!shown.length && <p className="orders-empty" role="status">No demo orders match “{search}”. Try another name or order number.</p>}</div><div className="orders-bottom">Showing {shown.length} of {orders.length} demo orders<span>Sample data / USD</span></div></section>
+      <div className="admin-bottom-grid"><section className="admin-panel"><div className="admin-panel-heading"><div><h2>Store activity</h2><p>The little things adding up.</p></div><span className="admin-live">Sample feed</span></div><ul className="activity-list"><li><span>▤</span><div><b>New order received</b><p>Olivia ordered a Puffer jacket.</p></div><small>5m ago</small></li><li><span>♧</span><div><b>A new face in the community</b><p>Emma joined the AURA newsletter.</p></div><small>18m ago</small></li><li><span>◇</span><div><b>Winter edit refreshed</b><p>Seven collections ready to discover.</p></div><small>32m ago</small></li></ul></section><section className="admin-season-card"><span className="admin-eyebrow">THE NEXT CHAPTER</span><h2>Make this<br />your season.</h2><p>Your brand deserves a little more atmosphere. Explore your storefront and see the winter edit in action.</p><a href="/collections">Visit the collections <span aria-hidden="true">↗</span></a><span className="season-sparkle" aria-hidden="true">✦</span></section></div>
+    </>}<footer className="admin-footer"><span>© {new Date().getFullYear()} AURA Studio</span><span>Demo workspace · Made for your next chapter</span></footer></main></div>
+  </div>;
+}

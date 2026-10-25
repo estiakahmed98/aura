@@ -1,0 +1,4 @@
+import Image from "next/image";
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  return <main className="auth-page"><section className="auth-story" aria-label="AURA winter edit"><a href="/" className="auth-brand">AURA<span>WINTER ESSENTIALS</span></a><div className="auth-story-copy"><span className="page-eyebrow">Your atmosphere. Your rules.</span><h2>Step into<br /><em>your AURA.</em></h2><p>A considered wardrobe. A little celestial energy.<br />A season that feels like you.</p></div><div className="auth-fashion"><Image src="/images/drop4.jpg" alt="AURA fashion editorial" fill priority sizes="(max-width: 800px) 100vw, 48vw" /></div><span className="auth-edition">THE WINTER EDIT <span>01 / AURA</span></span></section><section className="auth-form-side"><a className="auth-back" href="/">← Back to the store</a>{children}<p className="auth-footer">AURA / A little more you.</p></section></main>;
+}

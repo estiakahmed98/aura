@@ -55,8 +55,8 @@ export default function HeroNav() {
         <Image className="nav-brand-icon" src={icon} alt="AURA" sizes="64px" />
       </a>
       <div className="nav-r">
-        <a href="#">Log in</a>
-        <button className="pill" type="button">Sign up</button>
+        <a href="/login">Log in</a>
+        <a className="pill nav-signup" href="/signup">Sign up</a>
       </div>
       <button
         ref={toggle}
@@ -74,8 +74,8 @@ export default function HeroNav() {
           <a key={label} href={href} onClick={() => setOpen(false)}>{label}</a>
         ))}
         <div className="nav-mobile-account">
-          <a href="#" onClick={() => setOpen(false)}>Log in</a>
-          <button className="pill" type="button" onClick={() => setOpen(false)}>Sign up</button>
+          <a href="/login" onClick={() => setOpen(false)}>Log in</a>
+          <a className="pill nav-signup" href="/signup" onClick={() => setOpen(false)}>Sign up</a>
         </div>
       </div>
     </nav>
