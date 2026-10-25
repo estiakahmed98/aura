@@ -22,12 +22,14 @@ export default function Hero() {
           sizes="(max-width: 600px) 94vw, (max-width: 1000px) 70vw, 620px"
         />
         <div className="hero-cloud" aria-hidden="true" />
+      </div>
+      <div className="hero-actions">
+        <span className="hero-tag left">Winter 2026</span>
         <a href="#shop" className="btn-lime hero-btn">
           <span>Explore Collection</span><span aria-hidden="true">&rarr;</span>
         </a>
+        <span className="hero-tag right">Community</span>
       </div>
-      <span className="hero-tag left">Winter 2026</span>
-      <span className="hero-tag right">Community</span>
     </section>
   );
 }
