@@ -142,18 +142,35 @@ button{font:inherit;cursor:pointer}
 }
 
 .drops{padding:80px 0}
-.drops-head{display:flex;justify-content:space-between;align-items:center;padding:0 60px}
+.drops-head{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:0 60px}
+.drops-head>.outline{display:inline-flex;align-items:center;justify-content:center;gap:10px;flex-shrink:0;white-space:nowrap}
 .drops-head h2{font-size:clamp(28px,3.2vw,44px)}
 .rail-wrap{position:relative;margin-top:36px}
-.rail{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 60px;scrollbar-width:none}
+.rail{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:60px;padding:0 60px;scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
-.drop{flex:0 0 min(380px,78vw);height:440px;border-radius:12px;scroll-snap-align:start;background-size:cover;background-position:center;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;transition:transform .4s}
+.drop{position:relative;isolation:isolate;overflow:hidden;flex:0 0 min(380px,78vw);height:440px;border-radius:12px;scroll-snap-align:start;background-size:cover;background-position:center;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;transition:transform .4s}
+.drop::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(transparent 45%,#0009);pointer-events:none}
+.drops-controls{display:contents}
 .drop:hover{transform:scale(.98)}
 .drop h3{font-size:30px}
 .drop p{font-size:11px;margin-top:4px}
 .arrow{position:absolute;top:50%;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.2);transform:translateY(-50%)}
 .arrow.l{left:20px}.arrow.r{right:20px}
 .drops .center{margin-top:36px}
+@media(max-width:700px){
+  .drops{padding:48px 0}
+  .drops-head{gap:16px;align-items:center}
+  .drops-head h2{min-width:0;font-size:clamp(22px,6.3vw,30px);line-height:1.2}
+  .drops-head>.outline{min-width:92px;padding-inline:12px;font-size:13px}
+  .drops .rail-wrap{margin-top:24px}
+  .drops .rail{gap:16px;scroll-padding-inline:20px;overscroll-behavior-x:contain}
+  .drops .drop{flex-basis:calc(100vw - 64px);height:clamp(340px,108vw,440px);padding:22px;scroll-snap-stop:always}
+  .drop h3{font-size:30px;line-height:1.15}
+  .drop p{max-width:230px;font-size:11px;line-height:1.6;margin-top:8px}
+  .drops-controls{display:none}
+  .drops .center{margin-top:24px;padding-inline:20px}
+  .drops .center .outline{max-width:100%;font-size:13px;white-space:nowrap}
+}
 
 .loved{position:relative;min-height:820px;padding-top:60px;text-align:center;overflow:hidden}
 .loved h2{font-size:clamp(28px,3.2vw,44px)}
