@@ -1,9 +1,10 @@
-import Reveal from "./Reveal";
+﻿import Image from "next/image";
+import Link from "next/link";
 
-const items = [
-  { t: "Puffer jackets", p: "$292", d: "Lightweight puffers with powerful insulation.", img: "puffer-Photoroom.png" },
-  { t: "Wool coats", p: "$300", d: "Elegant wool coats for premium winter warmth.", img: "wool-Photoroom.png" },
-  { t: "Knit sweaters", p: "$200", d: "Soft knits for cozy everyday comfort.", img: "knit-Photoroom.png" },
+const featured = [
+  { title: "Outerwear", image: "/editorial/Knitwear.png", description: "Considered jackets for cooler days." },
+  { title: "Knitwear", image: "/editorial/Suits.png", description: "Soft layers with an effortless finish." },
+  { title: "Casual shirts", image: "/editorial/Outerwear.png", description: "Everyday shirts, styled your way." },
 ];
 
 export default function ShopStyle() {
@@ -12,21 +13,19 @@ export default function ShopStyle() {
       <div className="shop-head">
         <h2 className="display">Shop by<br />signature style</h2>
         <div className="shop-side">
-          <p>Curated fashion categories designed to match every mood, moment, and personality.</p>
-          <a href="/collections" className="btn-lime">Explore Collection &rarr;</a>
+          <p>Considered tailoring, soft layers, and pieces to make your own.</p>
+          <a href="/collections" className="btn-lime">Explore Collection →</a>
         </div>
       </div>
-      <div className="shop-grid">
-        {items.map((it, i) => (
-          <Reveal key={it.t} delay={i * 120}>
-            <article className="shop-card">
-              <div className="shop-img" style={{ backgroundImage: `url(/images/${it.img})` }}>
-                <button className="heart" aria-label={`Save ${it.t}`}>&#9825;</button>
-              </div>
-              <div className="shop-row display"><span>{it.t}</span><span>{it.p}</span></div>
-              <p>{it.d}</p>
-            </article>
-          </Reveal>
+      <div className="product-grid featured-products">
+        {featured.map(item => (
+          <Link key={item.title} href="/collections" className="product-card">
+            <div className="product-photo">
+              <Image src={item.image} alt={`${item.title} collection`} fill sizes="(max-width:600px) 90vw, 30vw" />
+            </div>
+            <h2>{item.title}</h2>
+            <p>{item.description}</p>
+          </Link>
         ))}
       </div>
     </section>

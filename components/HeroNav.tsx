@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import logo from "../public/logo.png";
 import icon from "../public/icon.png";
+import { CartLink } from "./CartProvider";
 
 const links = [
   { label: "Home", href: "/" },
@@ -55,6 +56,7 @@ export default function HeroNav() {
         <Image className="nav-brand-icon" src={icon} alt="AURA" sizes="64px" />
       </a>
       <div className="nav-r">
+        <CartLink />
         <a href="/login">Log in</a>
         <a className="pill nav-signup" href="/signup">Sign up</a>
       </div>
@@ -74,6 +76,7 @@ export default function HeroNav() {
           <a key={label} href={href} onClick={() => setOpen(false)}>{label}</a>
         ))}
         <div className="nav-mobile-account">
+          <CartLink />
           <a href="/login" onClick={() => setOpen(false)}>Log in</a>
           <a className="pill nav-signup" href="/signup" onClick={() => setOpen(false)}>Sign up</a>
         </div>

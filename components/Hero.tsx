@@ -14,9 +14,9 @@ export default function Hero() {
       <div className="hero-orbit" aria-hidden="true" />
       <div className="hero-stage">
         <Image
-          className="figure"
-          src="/images/hero-model.png"
-          alt="Seated model wearing a black puffer vest and blue winter hoodie"
+          className="figure hero-category-image"
+          src="/editorial/jackets-removebg-preview.png"
+          alt="Model styling a navy jacket with knitwear and cream trousers from the jackets collection"
           fill
           priority
           sizes="(max-width: 600px) 94vw, (max-width: 1000px) 70vw, 620px"

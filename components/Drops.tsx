@@ -1,14 +1,15 @@
 "use client";
 import { useRef } from "react";
+import Link from "next/link";
 
 const drops = [
-  { t: "Simple casual", img: "drop1.jpg", bg: "linear-gradient(160deg,#5b7aa8,#c9d4e4)" },
-  { t: "Hangout dress", img: "drop2.jpg", bg: "linear-gradient(160deg,#d8b48a,#8a9a6a)" },
-  { t: "Cozy anywhere", img: "drop3.jpg", bg: "linear-gradient(160deg,#6b5a4a,#c9b9a2)" },
-  { t: "Tailored layers", img: "drop4.jpg", bg: "linear-gradient(160deg,#9ac27a,#e8f32a)" },
-  { t: "Winter", img: "drop5.jpg", bg: "linear-gradient(160deg,#5b7aa8,#c9d4e4)" },
-  { t: "Party", img: "drop6.jpg", bg: "linear-gradient(160deg,#493b60,#a68bba)" },
-  { t: "Date", img: "drop7.jpg", bg: "linear-gradient(160deg,#a16b68,#e6c9bd)" },
+  { t: "Simple casual", img: "/editorial/shirts.webp", description: "Everyday shirts, effortless styling." },
+  { t: "Hangout dress", img: "/editorial/trousers.webp", description: "Relaxed trousers for your everyday plans." },
+  { t: "Cozy anywhere", img: "/editorial/knitwear.webp", description: "Soft knitwear for cooler days." },
+  { t: "Tailored layers", img: "/editorial/tailoring.webp", description: "Considered tailoring, refined details." },
+  { t: "Winter", img: "/editorial/jackets.webp", description: "Jackets and layers for the season." },
+  { t: "Party", img: "/editorial/suits.webp", description: "Sharp suits for special occasions." },
+  { t: "Date", img: "/editorial/shoes.webp", description: "The finishing touch to your favorite look." },
 ];
 
 export default function Drops() {
@@ -32,10 +33,10 @@ export default function Drops() {
       <div className="rail-wrap">
         <div className="rail" ref={rail} tabIndex={0} role="region" aria-label="Winter collections">
           {drops.map((d) => (
-            <article key={d.t} className="drop" style={{ backgroundImage: `url(/images/${d.img}), ${d.bg}` }}>
+            <Link href="/collections" key={d.t} className="drop" style={{ backgroundImage: `url(${d.img})` }}>
               <h3 className="display">{d.t}</h3>
-              <p>More than 100+ collection available for all gender</p>
-            </article>
+              <p>{d.description}</p>
+            </Link>
           ))}
         </div>
         <div className="drops-controls">

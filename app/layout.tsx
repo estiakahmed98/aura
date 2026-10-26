@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Bodoni_Moda, Italiana, Inter } from "next/font/google";
 import "./globals.css";
+import CartProvider from "@/components/CartProvider";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-display" });
 const italiana = Italiana({ weight: "400", subsets: ["latin"], variable: "--font-logo" });
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${anton.variable} ${italiana.variable} ${inter.variable} ${wordmark.variable}`} suppressHydrationWarning>
-      <body>{children}</body>
+      <body><CartProvider>{children}</CartProvider></body>
     </html>
   );
 }
