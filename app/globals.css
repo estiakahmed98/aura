@@ -450,3 +450,16 @@ button{font:inherit;cursor:pointer}
 .product-copy{overflow-wrap:anywhere}
 @media(max-width:800px){.product-detail{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.product-copy{gap:18px}.product-copy h1{font-size:clamp(28px,8vw,36px)}.product-thumbs button img{width:70px;height:88px}}
+/* Wishlist controls sit beside product links so saving never navigates away. */
+.wishlist-product-card{position:relative}
+.product-card-price{font-size:14px}
+.wishlist-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:12px 18px;border:1px solid #ccd4d7;border-radius:4px;background:#fff;color:#172b31;font-size:14px;cursor:pointer}
+.wishlist-button:hover{border-color:#172b31;background:#f6f8f3}
+.wishlist-button.is-saved{color:#a32c45;border-color:#d4a7b1}
+.wishlist-button:disabled{opacity:.5;cursor:wait}
+.wishlist-button-compact{position:absolute;right:10px;top:10px;width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;box-shadow:0 2px 10px #00000012}
+.product-copy>.wishlist-button{align-self:flex-start}
+.nav-r{gap:clamp(10px,1.5vw,24px)}
+.nav-r>a{white-space:nowrap}
+@media(min-width:701px) and (max-width:1100px){.nav{padding-inline:3%;font-size:13px}.nav-l{gap:12px}.nav-r{gap:10px}.nav .logo{width:120px;height:52px}.nav-r .pill{padding-inline:12px}}
+@media(max-width:600px){.wishlist-button-compact{right:7px;top:7px}}

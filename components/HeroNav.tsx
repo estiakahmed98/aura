@@ -5,6 +5,7 @@ import Image from "next/image";
 import logo from "../public/logo.png";
 import icon from "../public/icon.png";
 import { CartLink } from "./CartProvider";
+import { WishlistLink } from "./WishlistProvider";
 
 const links = [
   { label: "Home", href: "/" },
@@ -56,6 +57,7 @@ export default function HeroNav() {
         <Image className="nav-brand-icon" src={icon} alt="AURA" sizes="64px" />
       </a>
       <div className="nav-r">
+        <WishlistLink />
         <CartLink />
         <a href="/login">Log in</a>
         <a className="pill nav-signup" href="/signup">Sign up</a>
@@ -72,6 +74,7 @@ export default function HeroNav() {
         <span /><span /><span />
       </button>
       <div id="mobile-navigation" className="nav-mobile" hidden={!open}>
+        <WishlistLink onClick={() => setOpen(false)} />
         {links.map(({ label, href }) => (
           <a key={label} href={href} onClick={() => setOpen(false)}>{label}</a>
         ))}
