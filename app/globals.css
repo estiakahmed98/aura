@@ -443,3 +443,10 @@ button{font:inherit;cursor:pointer}
 @media(max-width:800px){.product-detail,.shopping-layout{grid-template-columns:1fr;gap:32px}.order-summary{position:static}.product-copy{padding-top:0}.product-copy h1{font-size:36px}}
 @media(max-width:600px){.commerce-container{padding:30px 5% 60px}.product-grid,.featured-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 12px}.featured-products .product-card:last-child{display:none}.product-card h2{font-size:13px}.catalog-toolbar{gap:12px}.catalog-toolbar input,.catalog-toolbar select{padding:11px;font-size:12px}.form-pair{grid-template-columns:1fr}.order-summary{padding:22px}.commerce-heading{margin-bottom:25px}}
 @media(max-width:600px){.featured-products{grid-template-columns:1fr}.featured-products .product-card:last-child{display:block}}
+/* Keep product galleries within their grid column on narrow screens. */
+.product-detail{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.product-detail>div{min-width:0}
+.product-thumbs{max-width:100%;overscroll-behavior-x:contain}
+.product-copy{overflow-wrap:anywhere}
+@media(max-width:800px){.product-detail{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.product-copy{gap:18px}.product-copy h1{font-size:clamp(28px,8vw,36px)}.product-thumbs button img{width:70px;height:88px}}
